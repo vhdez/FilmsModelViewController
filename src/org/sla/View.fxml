@@ -4,12 +4,19 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Accordion maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/15.0.1" fx:controller="org.sla.Controller">
+<Accordion maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="865.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sla.Controller">
   <panes>
+    <TitledPane animated="false" prefHeight="346.0" prefWidth="754.0" text="Home Videos">
+         <content>
+            <ListView fx:id="homeVideoList" prefHeight="200.0" prefWidth="200.0" />
+         </content>
+    </TitledPane>
     <TitledPane animated="false" text="Box Office Films">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -31,10 +38,18 @@
                </children></AnchorPane>
       </content>
     </TitledPane>
-    <TitledPane animated="false" text="Home Videos">
+      <TitledPane animated="false" text="All Films">
          <content>
-            <ListView fx:id="homeVideoList" prefHeight="200.0" prefWidth="200.0" />
+            <TableView fx:id="filmTable" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="rankColumn" prefWidth="37.0" text="Rank" />
+                  <TableColumn fx:id="typeColumn" prefWidth="79.0" text="Type" />
+                <TableColumn fx:id="titleColumn" prefWidth="393.0" text="Title" />
+                  <TableColumn fx:id="grossColumn" prefWidth="258.0" text="Gross" />
+                  <TableColumn fx:id="yearColumn" prefWidth="125.0" text="Year" />
+              </columns>
+            </TableView>
          </content>
-    </TitledPane>
+      </TitledPane>
   </panes>
 </Accordion>

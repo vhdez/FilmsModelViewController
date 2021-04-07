@@ -2,20 +2,23 @@ package org.sla;
 
 import java.util.ArrayList;
 
-class Film {
+public class Film {
     // Fields
+    private static Controller myController;
     private static ArrayList<Film> films;
-    private int rank;
+    private Integer rank;
     private String title;
-    private long gross;
-    private int year;
+    private Long gross;
+    private Integer year;
+    private String filmType;
 
     // Constructors
-    Film(int rank, String title, long gross, int year) {
+    Film(int rank, String title, long gross, int year, String filmType) {
         this.rank = rank;
         this.title = title;
         this.gross = gross;
         this.year = year;
+        this.filmType = filmType;
 
         // store the new object in the films ArrayList
         if (films == null) {
@@ -24,38 +27,66 @@ class Film {
         films.add(this);
     }
 
+    static void initialize() {
+        getMyController().updateFilmsUI();
+    }
+
     // Setters/Getters
 
-    int getRank() {
+    public static Controller getMyController() {
+        return myController;
+    }
+
+    public static void setMyController(Controller myController) {
+        Film.myController = myController;
+    }
+
+    public static ArrayList<Film> getFilms() {
+        return films;
+    }
+
+    public static void setFilms(ArrayList<Film> films) {
+        Film.films = films;
+    }
+
+    public Integer getRank() {
         return rank;
     }
 
-    void setRank(int rank) {
+    public void setRank(Integer rank) {
         this.rank = rank;
     }
 
-    String getTitle() {
+    public String getTitle() {
         return title;
     }
 
-    void setTitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    long getGross() {
+    public Long getGross() {
         return gross;
     }
 
-    void setGross(long gross) {
+    public void setGross(Long gross) {
         this.gross = gross;
     }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public String getFilmType() {
+        return filmType;
+    }
+
+    public void setFilmType(String filmType) {
+        this.filmType = filmType;
     }
 
     // Methods

@@ -19,38 +19,41 @@ public class Controller {
     // Home Videos GUI Elements
     public ListView<HomeVideo> homeVideoList;
 
-    public void initialize() {
-        BoxOfficeFilm.read("BoxOfficeFilmData");
-        BoxOfficeFilm film = BoxOfficeFilm.getFirstFilm();
-        int numFilms = BoxOfficeFilm.getNumberOfFilms();
-        updateViewWithFilm(film, 1, numFilms);
+    // Home Videos GUI Elements
+    public TableView<Film> filmTable;
+    public TableColumn<Film, Integer> rankColumn;
+    public TableColumn<Film, String> titleColumn;
+    public TableColumn<Film, Long> grossColumn;
+    public TableColumn<Film, Integer> yearColumn;
+    public TableColumn<Film, String> typeColumn;
 
-        HomeVideo.read("HomeVideoData");
-        ArrayList<HomeVideo> allHomeVideos = HomeVideo.getAllHomeVideos();
-        if (allHomeVideos != null) {
-            allHomeVideos.forEach(homeVideo -> {
-                homeVideoList.getItems().add(homeVideo);
-            });
-        }
+    public void initialize() {
+        // This gets called BEFORE the User ever uses the UI
+        Film.setMyController(this);
+
+        // Wire table's columns with fields in ToDoItem object
+        rankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        grossColumn.setCellValueFactory(new PropertyValueFactory<>("gross"));
+        yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("filmType"));
+
+        BoxOfficeFilm.initialize();
+        HomeVideo.initialize();
+        Film.initialize();
 
         Film.describeAll();
     }
 
     public void previousButtonClicked() {
-        BoxOfficeFilm film = BoxOfficeFilm.getPreviousFilm();
-        int counter = BoxOfficeFilm.getCurrentFilmNumber();
-        int numFilms = BoxOfficeFilm.getNumberOfFilms();
-        updateViewWithFilm(film, counter, numFilms);
+        BoxOfficeFilm.previous();
     }
 
     public void nextButtonClicked() {
-        BoxOfficeFilm film = BoxOfficeFilm.getNextFilm();
-        int counter = BoxOfficeFilm.getCurrentFilmNumber();
-        int numFilms = BoxOfficeFilm.getNumberOfFilms();
-        updateViewWithFilm(film, counter, numFilms);
+        BoxOfficeFilm.next();
     }
 
-    private void updateViewWithFilm(BoxOfficeFilm film, int filmNum, int numOfFilms) {
+    void updateBoxOfficeFilmsUI(BoxOfficeFilm film, int filmNum, int numOfFilms) {
         rankText.setText(Integer.toString(film.getRank()));
         titleText.setText(film.getTitle());
         yearText.setText(Integer.toString(film.getYear()));
@@ -58,4 +61,27 @@ public class Controller {
         peakText.setText(Integer.toString(film.getPeak()));
         filmNumberLabel.setText(filmNum + " of " + numOfFilms);
     }
+
+    void updateHomeVideosUI() {
+        // Delete every item from UI
+        homeVideoList.getItems().clear();
+        ArrayList<HomeVideo> allHomeVideos = HomeVideo.getAllHomeVideos();
+        if (allHomeVideos != null) {
+            allHomeVideos.forEach(homeVideo -> {
+                homeVideoList.getItems().add(homeVideo);
+            });
+        }
+    }
+
+    void updateFilmsUI() {
+        // Delete every item from UI
+        filmTable.getItems().clear();
+        ArrayList<Film> allFilms = Film.getFilms();
+        if (allFilms != null) {
+            allFilms.forEach(film -> {
+                filmTable.getItems().add(film);
+            });
+        }
+    }
+
 }

@@ -20,7 +20,7 @@ class HomeVideo extends Film {
 
     // Constructors
     HomeVideo(int rank, String title, long gross, String releaseDate, int year, int allSales, int vhsSales, int dvdSales, int bluraySales) {
-        super(rank, title, gross, year);
+        super(rank, title, gross, year, "Home Video");
         this.releaseDate = releaseDate;
         this.allSales = allSales;
         this.vhsSales = vhsSales;
@@ -32,6 +32,11 @@ class HomeVideo extends Film {
             allHomeVideos = new ArrayList<HomeVideo>();
         }
         allHomeVideos.add(this);
+    }
+
+    static void initialize() {
+        read("HomeVideoData");
+        getMyController().updateHomeVideosUI();
     }
 
     // Setters/Getters

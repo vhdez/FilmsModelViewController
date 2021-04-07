@@ -14,7 +14,7 @@ class BoxOfficeFilm extends Film {
 
     // Constructors
     BoxOfficeFilm(int rank, String title, int releaseYear, long gross, int peak) {
-        super(rank, title, gross,  releaseYear);
+        super(rank, title, gross, releaseYear, "Box Office");
         this.peak = peak;
 
         // store the new object in the boxOfficeFilms ArrayList
@@ -22,6 +22,11 @@ class BoxOfficeFilm extends Film {
             boxOfficeFilms = new ArrayList<BoxOfficeFilm>();
         }
         boxOfficeFilms.add(this);
+    }
+
+    static void initialize() {
+        read("BoxOfficeFilmData");
+        getMyController().updateBoxOfficeFilmsUI(getFirstFilm(), 1, getNumberOfFilms());
     }
 
     // Setters/Getters
@@ -34,29 +39,6 @@ class BoxOfficeFilm extends Film {
         this.peak = peak;
     }
 
-    static public BoxOfficeFilm getFirstFilm() {
-        currentFilmNumber = 1;
-        return boxOfficeFilms.get(currentFilmNumber - 1);
-    }
-
-    static public BoxOfficeFilm getNextFilm() {
-        if (currentFilmNumber < boxOfficeFilms.size()) {
-            currentFilmNumber = currentFilmNumber + 1;
-        } else {
-            currentFilmNumber = 1;
-        }
-        return boxOfficeFilms.get(currentFilmNumber - 1);
-    }
-
-    static public BoxOfficeFilm getPreviousFilm() {
-        if (currentFilmNumber > 1) {
-            currentFilmNumber = currentFilmNumber - 1;
-        } else {
-            currentFilmNumber = boxOfficeFilms.size();
-        }
-        return boxOfficeFilms.get(currentFilmNumber - 1);
-    }
-
     static public int getCurrentFilmNumber() {
         return currentFilmNumber;
     }
@@ -65,8 +47,7 @@ class BoxOfficeFilm extends Film {
         return boxOfficeFilms.size();
     }
 
-
-        // Methods
+    // Methods
     public String toString() {
         String description = "Box Office rank #" + this.getRank();
         description = description + " is \"" + this.getTitle() + "\"" ;
@@ -108,5 +89,36 @@ class BoxOfficeFilm extends Film {
 
             Film film = new BoxOfficeFilm(ranking, title, year, revenue, peak);
         }
+    }
+
+    static public BoxOfficeFilm getFirstFilm() {
+        currentFilmNumber = 1;
+        return boxOfficeFilms.get(currentFilmNumber - 1);
+    }
+
+    static public BoxOfficeFilm getNextFilm() {
+        if (currentFilmNumber < boxOfficeFilms.size()) {
+            currentFilmNumber = currentFilmNumber + 1;
+        } else {
+            currentFilmNumber = 1;
+        }
+        return boxOfficeFilms.get(currentFilmNumber - 1);
+    }
+
+    static public BoxOfficeFilm getPreviousFilm() {
+        if (currentFilmNumber > 1) {
+            currentFilmNumber = currentFilmNumber - 1;
+        } else {
+            currentFilmNumber = boxOfficeFilms.size();
+        }
+        return boxOfficeFilms.get(currentFilmNumber - 1);
+    }
+
+    static void previous() {
+        getMyController().updateBoxOfficeFilmsUI(getPreviousFilm(), getCurrentFilmNumber(), getNumberOfFilms());
+    }
+
+    static void next() {
+        getMyController().updateBoxOfficeFilmsUI(getNextFilm(), getCurrentFilmNumber(), getNumberOfFilms());
     }
 }
