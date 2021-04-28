@@ -74,21 +74,25 @@ public class Controller {
     public void importBoxOfficeFilms() {
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(myStage);
-        BoxOfficeFilm.read(selectedFile.getPath());
+        if (selectedFile != null && selectedFile.exists()) {
+            BoxOfficeFilm.read(selectedFile.getPath());
 
-        updateBoxOfficeFilmsUI(BoxOfficeFilm.getFirstFilm(), 1, BoxOfficeFilm.getNumberOfFilms());
-        updateFilmsUI();
-        myAccordion.setExpandedPane(boxOfficeMoviesPane);
+            updateBoxOfficeFilmsUI(BoxOfficeFilm.getFirstFilm(), 1, BoxOfficeFilm.getNumberOfFilms());
+            updateFilmsUI();
+            myAccordion.setExpandedPane(boxOfficeMoviesPane);
+        }
     }
 
     public void importHomeMovies() {
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(myStage);
-        HomeVideo.read(selectedFile.getPath());
+        if (selectedFile != null && selectedFile.exists()) {
+            HomeVideo.read(selectedFile.getPath());
 
-        updateHomeVideosUI();
-        updateFilmsUI();
-        myAccordion.setExpandedPane(homeVideosPane);
+            updateHomeVideosUI();
+            updateFilmsUI();
+            myAccordion.setExpandedPane(homeVideosPane);
+        }
     }
 
     public void saveData() {
