@@ -9,47 +9,63 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<Accordion maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="865.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sla.Controller">
-  <panes>
-    <TitledPane animated="false" prefHeight="346.0" prefWidth="754.0" text="Home Videos">
-         <content>
-            <ListView fx:id="homeVideoList" prefHeight="200.0" prefWidth="200.0" />
-         </content>
-    </TitledPane>
-    <TitledPane animated="false" text="Box Office Films">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Label layoutX="35.0" layoutY="26.0" prefHeight="17.0" prefWidth="84.0" text="Rank:" />
-                  <Label layoutX="35.0" layoutY="62.0" prefHeight="17.0" prefWidth="84.0" text="Title:" />
-                  <Label layoutX="35.0" layoutY="113.0" prefHeight="17.0" prefWidth="84.0" text="Year:" />
-                  <Label layoutX="35.0" layoutY="164.0" prefHeight="17.0" prefWidth="84.0" text="Gross:" />
-                  <Label layoutX="35.0" layoutY="216.0" prefHeight="17.0" prefWidth="84.0" text="Peak:" />
-                  <TextField fx:id="rankText" layoutX="138.0" layoutY="21.0" prefHeight="27.0" prefWidth="347.0" />
-                  <TextField fx:id="titleText" layoutX="138.0" layoutY="57.0" prefHeight="27.0" prefWidth="347.0" />
-                  <TextField fx:id="yearText" layoutX="138.0" layoutY="117.0" prefHeight="27.0" prefWidth="347.0" />
-                  <TextField fx:id="grossText" layoutX="138.0" layoutY="159.0" prefHeight="27.0" prefWidth="347.0" />
-                  <TextField fx:id="peakText" layoutX="138.0" layoutY="211.0" prefHeight="27.0" prefWidth="347.0" />
-                  <Button fx:id="previousButton" layoutX="35.0" layoutY="293.0" mnemonicParsing="false" onAction="#previousButtonClicked" prefHeight="27.0" prefWidth="104.0" text="Previous" />
-                  <Button fx:id="nextButton" layoutX="381.0" layoutY="293.0" mnemonicParsing="false" onAction="#nextButtonClicked" prefHeight="27.0" prefWidth="104.0" text="Next" />
-                  <Label layoutX="171.0" layoutY="298.0" prefHeight="17.0" prefWidth="78.0" text="Film Number:" />
-                  <Label fx:id="filmNumberLabel" layoutX="249.0" layoutY="298.0" prefHeight="17.0" prefWidth="118.0" text="0 of 0" />
-               </children></AnchorPane>
-      </content>
-    </TitledPane>
-      <TitledPane animated="false" text="All Films">
-         <content>
-            <TableView fx:id="filmTable" prefHeight="200.0" prefWidth="200.0">
-              <columns>
-                <TableColumn fx:id="rankColumn" prefWidth="37.0" text="Rank" />
-                  <TableColumn fx:id="typeColumn" prefWidth="79.0" text="Type" />
-                <TableColumn fx:id="titleColumn" prefWidth="393.0" text="Title" />
-                  <TableColumn fx:id="grossColumn" prefWidth="258.0" text="Gross" />
-                  <TableColumn fx:id="yearColumn" prefWidth="125.0" text="Year" />
-              </columns>
-            </TableView>
-         </content>
-      </TitledPane>
-  </panes>
-</Accordion>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="867.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sla.Controller">
+   <children>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label prefHeight="17.0" prefWidth="267.0" text="Manage Your Data:" />
+            <Button fx:id="importHomeMoviesButton" mnemonicParsing="false" onAction="#importHomeMovies" prefHeight="26.0" prefWidth="219.0" text="Import Home Videos..." />
+            <Button fx:id="importBoxOfficeFilmsButton" mnemonicParsing="false" onAction="#importBoxOfficeFilms" prefHeight="26.0" prefWidth="201.0" text="Import Box Office Films..." />
+            <Button fx:id="saveDataButton" mnemonicParsing="false" onAction="#saveData" prefHeight="26.0" prefWidth="181.0" text="Save Data" />
+         </children>
+      </HBox>
+      <Accordion fx:id="myAccordion" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="865.0">
+         <panes>
+            <TitledPane fx:id="homeVideosPane" animated="false" prefHeight="346.0" prefWidth="754.0" text="Home Videos">
+               <content>
+                  <ListView fx:id="homeVideoList" prefHeight="200.0" prefWidth="200.0" />
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="boxOfficeMoviesPane" animated="false" prefHeight="438.0" prefWidth="865.0" text="Box Office Films">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="863.0">
+                     <children>
+                        <Label layoutX="35.0" layoutY="26.0" prefHeight="17.0" prefWidth="84.0" text="Rank:" />
+                        <Label layoutX="35.0" layoutY="62.0" prefHeight="17.0" prefWidth="84.0" text="Title:" />
+                        <Label layoutX="35.0" layoutY="113.0" prefHeight="17.0" prefWidth="84.0" text="Year:" />
+                        <Label layoutX="35.0" layoutY="164.0" prefHeight="17.0" prefWidth="84.0" text="Gross:" />
+                        <Label layoutX="35.0" layoutY="216.0" prefHeight="17.0" prefWidth="84.0" text="Peak:" />
+                        <TextField fx:id="rankText" layoutX="138.0" layoutY="21.0" prefHeight="27.0" prefWidth="347.0" />
+                        <TextField fx:id="titleText" layoutX="138.0" layoutY="57.0" prefHeight="27.0" prefWidth="347.0" />
+                        <TextField fx:id="yearText" layoutX="138.0" layoutY="117.0" prefHeight="27.0" prefWidth="347.0" />
+                        <TextField fx:id="grossText" layoutX="138.0" layoutY="159.0" prefHeight="27.0" prefWidth="347.0" />
+                        <TextField fx:id="peakText" layoutX="138.0" layoutY="211.0" prefHeight="27.0" prefWidth="347.0" />
+                        <Button fx:id="previousButton" layoutX="35.0" layoutY="293.0" mnemonicParsing="false" onAction="#previousButtonClicked" prefHeight="27.0" prefWidth="104.0" text="Previous" />
+                        <Button fx:id="nextButton" layoutX="381.0" layoutY="293.0" mnemonicParsing="false" onAction="#nextButtonClicked" prefHeight="27.0" prefWidth="104.0" text="Next" />
+                        <Label layoutX="171.0" layoutY="298.0" prefHeight="17.0" prefWidth="78.0" text="Film Number:" />
+                        <Label fx:id="filmNumberLabel" layoutX="249.0" layoutY="298.0" prefHeight="17.0" prefWidth="118.0" text="0 of 0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="allFilmsPane" animated="false" expanded="false" text="All Films">
+               <content>
+                  <TableView fx:id="filmTable" prefHeight="200.0" prefWidth="200.0">
+                     <columns>
+                        <TableColumn fx:id="rankColumn" prefWidth="37.0" text="Rank" />
+                        <TableColumn fx:id="typeColumn" prefWidth="79.0" text="Type" />
+                        <TableColumn fx:id="titleColumn" prefWidth="393.0" text="Title" />
+                        <TableColumn fx:id="grossColumn" prefWidth="258.0" text="Gross" />
+                        <TableColumn fx:id="yearColumn" prefWidth="125.0" text="Year" />
+                     </columns>
+                  </TableView>
+               </content>
+            </TitledPane>
+         </panes>
+      </Accordion>
+   </children>
+</VBox>

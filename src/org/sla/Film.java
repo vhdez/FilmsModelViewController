@@ -1,8 +1,9 @@
 package org.sla;
 
+import java.io.*;
 import java.util.ArrayList;
 
-public class Film {
+public class Film implements Serializable {
     // Fields
     private static Controller myController;
     private static ArrayList<Film> films;
@@ -25,10 +26,6 @@ public class Film {
             films = new ArrayList<Film>();
         }
         films.add(this);
-    }
-
-    static void initialize() {
-        getMyController().updateFilmsUI();
     }
 
     // Setters/Getters
@@ -90,6 +87,38 @@ public class Film {
     }
 
     // Methods
+    static public void save() {
+        // write (serialize) the model objects
+        if (films != null && !films.isEmpty()) {
+            try {
+                File savedModelFile = new File("serializedAllFilms");
+                FileOutputStream savedModelFileStream = new FileOutputStream(savedModelFile);
+                ObjectOutputStream out = new ObjectOutputStream(savedModelFileStream);
+                out.writeObject(films);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    static public boolean restore() {
+        // try to read (deserialize) model objects from disk
+        File savedModelFile = new File("serializedAllFilms");
+        if (savedModelFile.exists()) {
+            try {
+                FileInputStream savedModelFileStream = new FileInputStream(savedModelFile);
+                ObjectInputStream in = new ObjectInputStream(savedModelFileStream);
+                films  = (ArrayList<Film>)in.readObject();
+                if (!films.isEmpty()) {
+                    return true;
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return false;
+    }
+
     public String toString() {
         String description = "\"" + this.getTitle();
         description = description + "\" has Film ranking #" + this.getRank();

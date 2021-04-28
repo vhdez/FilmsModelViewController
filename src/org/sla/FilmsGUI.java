@@ -7,13 +7,24 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class FilmsGUI extends Application {
+    Controller theController;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("View.fxml"));
+    public void start(Stage primaryStage) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("View.fxml"));
+        Parent root = loader.load();
+
         primaryStage.setTitle("Top Films Data");
         primaryStage.setScene(new Scene(root, 865, 703));
         primaryStage.show();
+
+        theController = loader.getController();
+        theController.setMyStage(primaryStage);
+    }
+
+    @Override
+    public void stop() throws Exception {
+        theController.saveData();
     }
 
     public static void main(String[] args) {

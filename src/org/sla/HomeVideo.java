@@ -1,15 +1,10 @@
 package org.sla;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class HomeVideo extends Film {
+class HomeVideo extends Film implements Serializable {
     // Fields
     static ArrayList<HomeVideo> allHomeVideos;
     private String releaseDate;
@@ -32,11 +27,6 @@ class HomeVideo extends Film {
             allHomeVideos = new ArrayList<HomeVideo>();
         }
         allHomeVideos.add(this);
-    }
-
-    static void initialize() {
-        read("HomeVideoData");
-        getMyController().updateHomeVideosUI();
     }
 
     // Setters/Getters
@@ -160,4 +150,37 @@ class HomeVideo extends Film {
             ranking = ranking + 1;
         }
     }
+
+    static public void save() {
+        if (allHomeVideos != null && !allHomeVideos.isEmpty()) {
+            // write (serialize) the model objects
+            try {
+                File savedModelFile = new File("serializedAllHomeVideos");
+                FileOutputStream savedModelFileStream = new FileOutputStream(savedModelFile);
+                ObjectOutputStream out = new ObjectOutputStream(savedModelFileStream);
+                out.writeObject(allHomeVideos);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    static public boolean restore() {
+        // try to read (deserialize) model objects from disk
+        File savedModelFile = new File("serializedAllHomeVideos");
+        if (savedModelFile.exists()) {
+            try {
+                FileInputStream savedModelFileStream = new FileInputStream(savedModelFile);
+                ObjectInputStream in = new ObjectInputStream(savedModelFileStream);
+                allHomeVideos  = (ArrayList<HomeVideo>)in.readObject();
+                if (!allHomeVideos.isEmpty()) {
+                    return true;
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return false;
+    }
+
 }

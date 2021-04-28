@@ -1,11 +1,10 @@
 package org.sla;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class BoxOfficeFilm extends Film {
+class BoxOfficeFilm extends Film implements Serializable {
 
     // Fields
     private static ArrayList<BoxOfficeFilm> boxOfficeFilms;
@@ -22,11 +21,6 @@ class BoxOfficeFilm extends Film {
             boxOfficeFilms = new ArrayList<BoxOfficeFilm>();
         }
         boxOfficeFilms.add(this);
-    }
-
-    static void initialize() {
-        read("BoxOfficeFilmData");
-        getMyController().updateBoxOfficeFilmsUI(getFirstFilm(), 1, getNumberOfFilms());
     }
 
     // Setters/Getters
@@ -121,4 +115,37 @@ class BoxOfficeFilm extends Film {
     static void next() {
         getMyController().updateBoxOfficeFilmsUI(getNextFilm(), getCurrentFilmNumber(), getNumberOfFilms());
     }
+
+    static public void save() {
+        if (boxOfficeFilms != null && !boxOfficeFilms.isEmpty()) {
+            // write (serialize) the model objects
+            try {
+                File savedModelFile = new File("serializedAllBoxOfficeFilms");
+                FileOutputStream savedModelFileStream = new FileOutputStream(savedModelFile);
+                ObjectOutputStream out = new ObjectOutputStream(savedModelFileStream);
+                out.writeObject(boxOfficeFilms);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    static public boolean restore() {
+        // try to read (deserialize) model objects from disk
+        File savedModelFile = new File("serializedAllBoxOfficeFilms");
+        if (savedModelFile.exists()) {
+            try {
+                FileInputStream savedModelFileStream = new FileInputStream(savedModelFile);
+                ObjectInputStream in = new ObjectInputStream(savedModelFileStream);
+                boxOfficeFilms  = (ArrayList<BoxOfficeFilm>)in.readObject();
+                if (!boxOfficeFilms.isEmpty()) {
+                    return true;
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return false;
+    }
+
 }
