@@ -84,6 +84,10 @@ class HomeVideo extends Film implements Serializable {
         return description;
     }
 
+    static void addNewEmptyFilm() {
+        new HomeVideo(0,"",0,"",0,0,0, 0,0);
+    }
+
     static void read(String datafilePath) {
         // scan data file line-by-line
         File dataFile = new File(datafilePath);
@@ -180,6 +184,7 @@ class HomeVideo extends Film implements Serializable {
                 ex.printStackTrace();
             }
         }
+        allHomeVideos = new ArrayList<HomeVideo>();
         return false;
     }
 

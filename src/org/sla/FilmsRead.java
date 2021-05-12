@@ -3,11 +3,9 @@ package org.sla;
 class FilmsRead {
 
     public static void main(String[] args) {
-        String boxOfficeFilmsData = args[0];
-        BoxOfficeFilm.read(boxOfficeFilmsData);
+        BoxOfficeFilm.read("BoxOfficeFilmData");
 
-        String homeVideoData = args[1];
-        HomeVideo.read(homeVideoData);
+        HomeVideo.read("HomeVideoData");
 
         Film.describeAll();
     }

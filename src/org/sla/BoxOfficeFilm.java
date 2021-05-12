@@ -1,5 +1,6 @@
 package org.sla;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -85,9 +86,13 @@ class BoxOfficeFilm extends Film implements Serializable {
         }
     }
 
+    static public BoxOfficeFilm getCurrentFilm() {
+        return boxOfficeFilms.get(currentFilmNumber-1);
+    }
+
     static public BoxOfficeFilm getFirstFilm() {
         currentFilmNumber = 1;
-        return boxOfficeFilms.get(currentFilmNumber - 1);
+        return getCurrentFilm();
     }
 
     static public BoxOfficeFilm getNextFilm() {
@@ -96,7 +101,7 @@ class BoxOfficeFilm extends Film implements Serializable {
         } else {
             currentFilmNumber = 1;
         }
-        return boxOfficeFilms.get(currentFilmNumber - 1);
+        return getCurrentFilm();
     }
 
     static public BoxOfficeFilm getPreviousFilm() {
@@ -105,7 +110,7 @@ class BoxOfficeFilm extends Film implements Serializable {
         } else {
             currentFilmNumber = boxOfficeFilms.size();
         }
-        return boxOfficeFilms.get(currentFilmNumber - 1);
+        return getCurrentFilm();
     }
 
     static void previous() {
@@ -114,6 +119,12 @@ class BoxOfficeFilm extends Film implements Serializable {
 
     static void next() {
         getMyController().updateBoxOfficeFilmsUI(getNextFilm(), getCurrentFilmNumber(), getNumberOfFilms());
+    }
+
+    static void addNewEmptyFilm() {
+        BoxOfficeFilm newEmptyFilm = new BoxOfficeFilm(0,"",0,0,0);
+        currentFilmNumber = boxOfficeFilms.size();
+        getMyController().updateBoxOfficeFilmsUI(newEmptyFilm, currentFilmNumber, getNumberOfFilms());
     }
 
     static public void save() {
@@ -145,6 +156,7 @@ class BoxOfficeFilm extends Film implements Serializable {
                 ex.printStackTrace();
             }
         }
+        boxOfficeFilms = new ArrayList<BoxOfficeFilm>();
         return false;
     }
 
